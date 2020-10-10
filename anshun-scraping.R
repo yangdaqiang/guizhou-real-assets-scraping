@@ -103,8 +103,6 @@ write.table(project_t, file = file_name, sep = ",", row.names = FALSE)
 
 as.numeric(project_t$ceti_no)
 
-ggplot(data = project_t) + geom_point(mapping = aes(x = ceti_no, y = average_price)) 
-
 
 
 
