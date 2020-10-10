@@ -9,7 +9,7 @@ base_url <- "http://as.gzfcxx.cn/House.aspx?page="
 project_t <- data.frame()
 
 # 1:X should change it manually
-for (i in 1:15){
+for (i in 1:10){
   myurl <- paste0(base_url, i)
   page_i <- read_html(myurl)
   
@@ -18,7 +18,7 @@ for (i in 1:15){
   proj_name_i <- html_nodes(page_i, ".Repeater table td:nth-child(2) .url") %>% 
     html_text()
   ceti_no_i <- html_nodes(page_i, "tr:nth-child(2) td:nth-child(2) div") %>% 
-    html_text()
+    html_text() %>% as.numeric()
   average_price_i <- html_nodes(page_i, "tr:nth-child(3) td:nth-child(4)") %>% 
     html_text() %>% as.numeric()
   sold_i <- html_nodes(page_i, ".Repeater table tr:nth-child(1) td:nth-child(6)") %>% 
@@ -48,8 +48,8 @@ for (i in 1:15){
   
 }
 
-
 detail_i <- paste0("http://as.gzfcxx.cn/House/Sale.aspx?qu=%e5%ae%89%e9%a1%ba&yszh=", 
+
                    project_t$ceti_no, "&xmmc=", project_t$proj_name, "&zhlx=ys")
 
 project_add <- data.frame()
@@ -98,10 +98,12 @@ project_t <- cbind(project_t, project_add)
 
 file_name <- paste0("anshun_asset", Sys.Date(), ".csv")
 
-write.table(project_t, file = file_name, sep = ",", row.names = FALSE)
+write.csv(project_t, file = file_name, row.names = FALSE, fileEncoding = "UTF-8")
 
 
-as.numeric(project_t$ceti_no)
+write.csv(project_t, file = file_name, sep = ",", row.names = FALSE, fileEncoding = "UTF-8")
+
+
 
 
 
